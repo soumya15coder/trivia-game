@@ -47,6 +47,24 @@ h1 {
   background-color: #0ea5e9;
 }
 
+.form-group {
+  margin: 1rem 0;
+}
+
+select {
+  padding: 0.6rem;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font-size: 1rem;
+  width: 250px;
+}
+
+.error-msg {
+  color: crimson;
+  margin-top: 1rem;
+}
+
+
 footer {
   margin-top: 3rem;
   font-size: 0.9rem;
