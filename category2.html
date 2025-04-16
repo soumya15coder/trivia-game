@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Select Your Trivia Adventure</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Select Your Trivia Adventure 🎯</h1>
+
+    <div class="form-group">
+      <label for="category">Choose a Category:</label>
+      <select id="category">
+        <option value="">--Select--</option>
+        <option value="science">Science & Technology</option>
+        <option value="pop">Pop Culture</option>
+        <option value="history">History & Geography</option>
+        <option value="movies">Movies & Entertainment</option>
+        <option value="records">Human Achievements</option>
+        <option value="food">Food & Drinks</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="difficulty">Select Difficulty:</label>
+      <select id="difficulty">
+        <option value="">--Select--</option>
+        <option value="easy">Easy</option>
+        <option value="medium">Medium</option>
+        <option value="hard">Hard</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="timer">Choose Timer:</label>
+      <select id="timer">
+        <option value="">--Select--</option>
+        <option value="60">1 Minute</option>
+        <option value="300">5 Minutes</option>
+      </select>
+    </div>
+
+    <button onclick="startTrivia()">🚀 Start Game</button>
+    <p id="error" class="error-msg"></p>
+  </div>
+
+  <script>
+    function startTrivia() {
+      const category = document.getElementById("category").value;
+      const difficulty = document.getElementById("difficulty").value;
+      const timer = document.getElementById("timer").value;
+      const errorEl = document.getElementById("error");
+
+      if (!category || !difficulty || !timer) {
+        errorEl.textContent = "Please fill in all options before starting the game!";
+        return;
+      }
+
+      // Pass user selections to game page via query parameters
+      const gameURL = `game.html?category=${category}&difficulty=${difficulty}&timer=${timer}`;
+      window.location.href = gameURL;
+    }
+  </script>
+</body>
+</html>
