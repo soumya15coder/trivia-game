@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>High Scores</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🏆 High Scores 🏆</h1>
+    <ul id="highScoresList"></ul>
+    <button onclick="goBack()">Back to Home</button>
+  </div>
+
+  <script>
+    function goBack() {
+      window.location.href = "index.html"; // Go back to the home page
+    }
+
+    function displayHighScores() {
+      const highScores = JSON.parse(localStorage.getItem('highScores')) || [];
+      const highScoresList = document.getElementById('highScoresList');
+
+      if (highScores.length === 0) {
+        highScoresList.innerHTML = "<li>No high scores available.</li>";
+      } else {
+        // Create an object to store the highest scores for each category/difficulty combination
+        const highestScores = {};
+
+        highScores.forEach(score => {
+          const key = `${score.category}-${score.difficulty}`;
+
+          // Only store the highest score for each category-difficulty combination
+          if (!highestScores[key] || highestScores[key].score < score.score) {
+            highestScores[key] = score;
+          }
+        });
+
+        // Now display the highest scores
+        for (let key in highestScores) {
+          const score = highestScores[key];
+          const li = document.createElement('li');
+          li.textContent = `${score.category} - ${score.difficulty} : ${score.score} (Time: ${score.time})`;
+          highScoresList.appendChild(li);
+        }
+      }
+    }
+
+    displayHighScores();
+  </script>
+</body>
+</html>
