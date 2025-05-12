@@ -5,49 +5,101 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>High Scores</title>
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    .container {
+      max-width: 600px;
+      margin: 3rem auto;
+      padding: 2rem;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.9);     
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    #highScoresList {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    #highScoresList li {
+      background-color: #e8f0fe;
+      color: #1a237e;
+      margin: 0.5rem 0;
+      padding: 1rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    button {
+      margin-top: 2rem;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      font-weight: bold;
+      background-color: #1a73e8;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    button:hover {
+      background-color: #0c56d0;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
     <h1>🏆 High Scores 🏆</h1>
     <ul id="highScoresList"></ul>
-    <button onclick="goBack()">Back to Home</button>
+    <button onclick="goBack()">Back to Home</button> <!-- button to go back to main page -->
   </div>
 
   <script>
+    //oke adding the goBack function, it's gonna take us back to the main page (index.html)
     function goBack() {
-      window.location.href = "index.html"; // Go back to the home page
+      window.location.href = "index.html";  //back to home page 
     }
 
+    // this is the function that displays the high scores! let's gooo
     function displayHighScores() {
-      const highScores = JSON.parse(localStorage.getItem('highScores')) || [];
-      const highScoresList = document.getElementById('highScoresList');
+      //get the high scores stored in local storage & parses it from a JSON string to an object/array
+      const highScores = JSON.parse(localStorage.getItem('highScores')) || [];  //or defaults to empty array if there are none
+      const highScoresList = document.getElementById('highScoresList'); //where we'll put the list of high scores
 
       if (highScores.length === 0) {
-        highScoresList.innerHTML = "<li>No high scores available.</li>";
+        highScoresList.innerHTML = "<li>No high scores available.</li>";  //if no scores in array, show this
       } else {
-        // Create an object to store the highest scores for each category/difficulty combination
-        const highestScores = {};
+        const highestScores = {};  //creates an empty object to store only the highest score for each category/difficulty combination
 
-        highScores.forEach(score => {
-          const key = `${score.category}-${score.difficulty}`;
-
-          // Only store the highest score for each category-difficulty combination
-          if (!highestScores[key] || highestScores[key].score < score.score) {
-            highestScores[key] = score;
+        highScores.forEach(score => {  //loop through the high scores to find the highest for each category/difficulty
+          const key = `${score.category}-${score.difficulty}`;  //key is a combo of category and difficulty
+          if (!highestScores[key] || highestScores[key].score < score.score) { //check if no entry yet or if we have a higher score or not
+            highestScores[key] = score;  //store/replace the highest score for this category/difficulty
           }
         });
 
-        // Now display the highest scores
-        for (let key in highestScores) {
+        //loop through the highestScores object to display them
+        for (let key in highestScores) { 
           const score = highestScores[key];
-          const li = document.createElement('li');
-          li.textContent = `${score.category} - ${score.difficulty} : ${score.score} (Time: ${score.time})`;
-          highScoresList.appendChild(li);
+          const li = document.createElement('li'); //creates a new <li> element to hold this score line
+          li.innerHTML = `<span>${score.category} - ${score.difficulty}</span><span>${score.score}</span>`; //this creates the list item
+          highScoresList.appendChild(li); //finally append the list <li> to the list on the page
         }
       }
     }
 
-    displayHighScores();
+    
+    displayHighScores(); //ok now we are going to see our beautiful high scores!
   </script>
 </body>
 </html>
