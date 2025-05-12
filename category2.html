@@ -11,7 +11,7 @@
     <h1>🎯 Select Your Trivia Adventure 🎯</h1>
 
     <div class="form-group">
-      <label for="category">Choose a Category:</label>
+      <label for="category">Choose a Category:</label> <!-- just adding all the categories -->
       <select id="category">
         <option value="">--Select--</option>
         <option value="science">Science & Technology</option>
@@ -24,7 +24,7 @@
     </div>
 
     <div class="form-group">
-      <label for="difficulty">Select Difficulty:</label>
+      <label for="difficulty">Select Difficulty:</label> <!-- adding difficulty leevls -->
       <select id="difficulty">
         <option value="">--Select--</option>
         <option value="easy">Easy</option>
@@ -37,30 +37,32 @@
       <label for="timer">Choose Timer:</label>
       <select id="timer">
         <option value="">--Select--</option>
-        <option value="60">1 Minute</option>
+        <option value="60">1 Minute</option>      <!-- timer options -->
         <option value="300">5 Minutes</option>
       </select>
     </div>
 
-    <button onclick="startTrivia()">🚀 Start Game 🚀</button>
+    <button onclick="startTrivia()">🚀 Start Game 🚀</button>     <!-- calling function to startt -->
     <p id="error" class="error-msg"></p>
   </div>
 
   <script>
+    //ok don't want any empty options here
     function startTrivia() {
-      const category = document.getElementById("category").value;
+      const category = document.getElementById("category").value;     //grabs selected choices from above <select id="category">
       const difficulty = document.getElementById("difficulty").value;
       const timer = document.getElementById("timer").value;
       const errorEl = document.getElementById("error");
 
+      //if one of the options is missing, throw an error, tell them to fill it out
       if (!category || !difficulty || !timer) {
-        errorEl.textContent = "Please fill in all options before starting the game!";
+        errorEl.textContent = "Please fill in all options before starting the game!";  //works if any one isn't selected by user
         return;
       }
 
-      // Pass user selections to game page via query parameters
-      const gameURL = `game.html?category=${category}&difficulty=${difficulty}&timer=${timer}`;
-      window.location.href = gameURL;
+      //pass the category, difficulty, and timer to the game page via query params
+      const gameURL = `game.html?category=${category}&difficulty=${difficulty}&timer=${timer}`;  //builds a url embedding the user’s choices as query parameters
+      window.location.href = gameURL;  //send em to the game page, launching game.html w chosen settings
     }
   </script>
 </body>
