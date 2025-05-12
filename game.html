@@ -131,12 +131,12 @@
       if (filtered.length > 0) {
         highScore = Math.max(...filtered.map(s => s.score)); //max score for that category/difficulty
       }
-      highScoreDisplay.textContent = `High Score: ${highScore}`; //update high score display
+      highScoreDisplay.textContent = `High Score: ${highScore}`; //update high score display on screen with the value i retrieved
     }
 
-    getPreviousHighScore(); //call it right away 
+    getPreviousHighScore(); //call it right away to show high score as soon as game starts
 
-    if (questions.length === 0) { // no questions available?!?@?!???!
+    if (questions.length === 0) { //checks if no questions available?!?
       questionEl.textContent = "No questions available for this combination."; // tell the user
     } else {
       startGame(); //start the game if questions are found
@@ -153,24 +153,24 @@
         return;
       }
 
-      const currentQ = questions[currentQuestionIndex];
-      questionEl.textContent = currentQ.question; //display the question
-      optionsEl.innerHTML = ''; //clear out any old buttons
+      const currentQ = questions[currentQuestionIndex]; //stores current question object
+      questionEl.textContent = currentQ.question; //displays the question on tha screen
+      optionsEl.innerHTML = ''; //clear out any old answe rbuttons
 
-      currentQ.options.forEach(option => { //loop through the options
-        const btn = document.createElement('button');
-        btn.className = 'option-btn';
+      currentQ.options.forEach(option => { //loop through the answer choices for current q
+        const btn = document.createElement('button'); //creates a new button element for each answer option
+        btn.className = 'option-btn'; //adds css clas to style tha button
         btn.textContent = option;
         btn.onclick = () => checkAnswer(option, currentQ.answer); //check answer when clicked
-        optionsEl.appendChild(btn); //add button to DOM
+        optionsEl.appendChild(btn); //add the kid to his parent node (button to page)
       });
     }
 
-    function checkAnswer(selected, correct) {
-      const optionButtons = document.querySelectorAll('.option-btn');
+    function checkAnswer(selected, correct) { //to check if an option is correct
+      const optionButtons = document.querySelectorAll('.option-btn'); //get all options on tha scrren
 
-      optionButtons.forEach(button => { //check if the answer is right
-        if (button.textContent === selected) {
+      optionButtons.forEach(button => { //check if the answer is right by looping trhu all the buttons
+        if (button.textContent === selected) { //if the user clicked the button...
           if (selected === correct) {
             button.style.backgroundColor = '#22c55e'; //right green
             score++; //increase score if right
@@ -178,7 +178,7 @@
             button.style.backgroundColor = '#ef4444'; //wrong red boooooo
           }
         } else if (button.textContent === correct) {
-          button.style.backgroundColor = '#22c55e'; //green if it's the correct option
+          button.style.backgroundColor = '#22c55e'; //green if it's the correct option even if user chose wrong
         }
         button.disabled = true; //disable all buttons after answering
       });
@@ -195,10 +195,10 @@
       setTimeout(() => { //wait 1 second before showing next question
         currentQuestionIndex++;
         displayQuestion();
-      }, 1000);
+      }, 1000); //in ms so this is one second!!
     }
 
-    function startTimer(seconds) {
+    function startTimer(seconds) { //COUNTDOWN TIMER FUNCTION
       timerEl.textContent = `Time Left: ${seconds}s`; //show initial time left
 
       countdown = setInterval(() => {
@@ -227,8 +227,8 @@
 
     function saveHighScore() {
       const highScores = JSON.parse(localStorage.getItem('highScores')) || []; //get all previous scores
-      highScores.push({ score, category, difficulty }); //save current game score
-      localStorage.setItem('highScores', JSON.stringify(highScores)); //store it
+      highScores.push({ score, category, difficulty }); //add current game score to list
+      localStorage.setItem('highScores', JSON.stringify(highScores)); //save it
     }
   </script>
 </body>
